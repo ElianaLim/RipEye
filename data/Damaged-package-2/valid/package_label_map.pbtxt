@@ -1,0 +1,15 @@
+item {
+    name: "Damaged",
+    id: 1,
+    display_name: "Damaged"
+}
+item {
+    name: "Destroyed",
+    id: 2,
+    display_name: "Destroyed"
+}
+item {
+    name: "Intact",
+    id: 3,
+    display_name: "Intact"
+}
