@@ -86,8 +86,7 @@ ipython_config.py
 .venv/
 __pycache__/
 .DS_Store
-data/
-*.tfrecord
+data/Damaged-package-2/
 *.ipynb_checkpoints/
 
 # pyenv
