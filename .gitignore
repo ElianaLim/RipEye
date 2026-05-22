@@ -86,7 +86,15 @@ ipython_config.py
 .venv/
 __pycache__/
 .DS_Store
-data/Damaged-package-2/
+data/*/
+!data/README.md
+!data/data.yaml
+!data/import/
+data/import/*
+!data/import/.gitkeep
+data/severity_labels.csv
+runs/
+*.pt
 *.ipynb_checkpoints/
 
 # pyenv

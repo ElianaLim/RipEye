@@ -1,8 +1,12 @@
-tensorflow>=2.21.0
-keras>=3.14.0
 numpy>=1.26.0
 opencv-python>=4.13.0.92
-roboflow>=1.3.5
-scikit-learn>=1.3.0
+pyyaml>=6.0.0
+pandas>=2.0.0
 matplotlib>=3.7.0
+ultralytics>=8.3.0
+scikit-learn>=1.3.0
 seaborn>=0.13.2
+roboflow>=1.1.0
+python-dotenv>=1.0.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
