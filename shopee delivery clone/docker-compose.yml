@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: shopee-delivery-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: shopee
+      POSTGRES_PASSWORD: shopee
+      POSTGRES_DB: shopee_delivery
+    volumes:
+      - shopee_delivery_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopee -d shopee_delivery"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  shopee_delivery_pgdata:

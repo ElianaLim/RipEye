@@ -1,0 +1,352 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Shopee Driver App API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: driver
+    description: Driver operations
+  - name: deliveries
+    description: Delivery operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /driver/profile:
+    get:
+      operationId: getDriverProfile
+      tags: [driver]
+      summary: Get driver profile
+      responses:
+        "200":
+          description: Driver profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Driver"
+
+  /driver/stats:
+    get:
+      operationId: getDriverStats
+      tags: [driver]
+      summary: Get driver statistics summary
+      responses:
+        "200":
+          description: Driver stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriverStats"
+
+  /deliveries:
+    get:
+      operationId: listDeliveries
+      tags: [deliveries]
+      summary: List all deliveries for the driver
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [pending, picked_up, in_transit, delivered, failed]
+      responses:
+        "200":
+          description: List of deliveries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Delivery"
+
+  /deliveries/{id}:
+    get:
+      operationId: getDelivery
+      tags: [deliveries]
+      summary: Get delivery details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Delivery details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Delivery"
+        "404":
+          description: Not found
+
+  /deliveries/{id}/status:
+    patch:
+      operationId: updateDeliveryStatus
+      tags: [deliveries]
+      summary: Update delivery status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeliveryStatusUpdate"
+      responses:
+        "200":
+          description: Updated delivery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Delivery"
+
+  /deliveries/{id}/pickup-photo:
+    post:
+      operationId: uploadPickupPhoto
+      tags: [deliveries]
+      summary: Upload a photo taken at package pickup
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUpload"
+      responses:
+        "200":
+          description: Photo upload result with damage check status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhotoResult"
+
+  /deliveries/{id}/delivery-photo:
+    post:
+      operationId: uploadDeliveryPhoto
+      tags: [deliveries]
+      summary: Upload a photo taken at package delivery
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUpload"
+      responses:
+        "200":
+          description: Photo upload result with damage check status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhotoResult"
+
+  /deliveries/recent-activity:
+    get:
+      operationId: getRecentActivity
+      tags: [deliveries]
+      summary: Get recent delivery activity feed
+      responses:
+        "200":
+          description: Recent activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    Driver:
+      type: object
+      required: [id, name, vehicleType, vehiclePlate, rating, totalDeliveries, status]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        vehicleType:
+          type: string
+        vehiclePlate:
+          type: string
+        rating:
+          type: number
+        totalDeliveries:
+          type: integer
+        status:
+          type: string
+          enum: [online, offline, busy]
+        avatarUrl:
+          type: ["string", "null"]
+
+    DriverStats:
+      type: object
+      required: [todayDeliveries, todayEarnings, weekDeliveries, weekEarnings, pendingCount, inTransitCount, completedToday]
+      properties:
+        todayDeliveries:
+          type: integer
+        todayEarnings:
+          type: number
+        weekDeliveries:
+          type: integer
+        weekEarnings:
+          type: number
+        pendingCount:
+          type: integer
+        inTransitCount:
+          type: integer
+        completedToday:
+          type: integer
+
+    Delivery:
+      type: object
+      required: [id, orderNumber, status, customerName, customerAddress, customerPhone, items, totalAmount, estimatedEarnings, createdAt]
+      properties:
+        id:
+          type: integer
+        orderNumber:
+          type: string
+        status:
+          type: string
+          enum: [pending, picked_up, in_transit, delivered, failed]
+        customerName:
+          type: string
+        customerAddress:
+          type: string
+        customerPhone:
+          type: string
+        sellerName:
+          type: string
+        sellerAddress:
+          type: ["string", "null"]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        totalAmount:
+          type: number
+        estimatedEarnings:
+          type: number
+        pickupPhotoUrl:
+          type: ["string", "null"]
+        deliveryPhotoUrl:
+          type: ["string", "null"]
+        pickupDamageFlag:
+          type: ["string", "null"]
+          enum: [none, minor, severe, null]
+        deliveryDamageFlag:
+          type: ["string", "null"]
+          enum: [none, minor, severe, null]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: ["string", "null"]
+        pickedUpAt:
+          type: ["string", "null"]
+        deliveredAt:
+          type: ["string", "null"]
+
+    OrderItem:
+      type: object
+      required: [name, quantity, price]
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+        imageUrl:
+          type: ["string", "null"]
+
+    DeliveryStatusUpdate:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [pending, picked_up, in_transit, delivered, failed]
+        notes:
+          type: string
+
+    PhotoUpload:
+      type: object
+      required: [imageData]
+      properties:
+        imageData:
+          type: string
+          description: Base64-encoded image data
+
+    PhotoResult:
+      type: object
+      required: [url, damageFlag, message]
+      properties:
+        url:
+          type: string
+        damageFlag:
+          type: string
+          enum: [none, minor, severe]
+        message:
+          type: string
+        damageDetails:
+          type: ["string", "null"]
+
+    ActivityItem:
+      type: object
+      required: [id, deliveryId, orderNumber, action, timestamp]
+      properties:
+        id:
+          type: integer
+        deliveryId:
+          type: integer
+        orderNumber:
+          type: string
+        action:
+          type: string
+        timestamp:
+          type: string
+        customerName:
+          type: ["string", "null"]
