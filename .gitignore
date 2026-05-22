@@ -88,6 +88,7 @@ __pycache__/
 .DS_Store
 data/Damaged-package-2/
 *.ipynb_checkpoints/
+webapp/models/saved_model/
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is

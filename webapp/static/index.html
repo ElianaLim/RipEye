@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RipEye Model Tester</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">RipEye</p>
+          <h1>Model tester</h1>
+        </div>
+        <div class="status" id="modelStatus">Ready for images</div>
+      </section>
+
+      <section class="workspace">
+        <div class="upload-panel">
+          <label class="drop-zone" id="dropZone">
+            <input id="fileInput" type="file" accept="image/*" multiple>
+            <span class="upload-icon">+</span>
+            <strong>Add package photos</strong>
+            <span>Drop images here or tap to choose files</span>
+          </label>
+
+          <div class="controls">
+            <button id="runButton" type="button" disabled>Run test</button>
+            <button id="clearButton" type="button" class="secondary" disabled>Clear</button>
+            <button id="csvButton" type="button" class="secondary" disabled>Export CSV</button>
+          </div>
+
+          <div class="summary" id="summary">
+            <div>
+              <span>Images</span>
+              <strong id="imageCount">0</strong>
+            </div>
+            <div>
+              <span>Average confidence</span>
+              <strong id="avgConfidence">-</strong>
+            </div>
+            <div>
+              <span>Average latency</span>
+              <strong id="avgLatency">-</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-panel">
+          <div class="results-head">
+            <h2>Results</h2>
+            <span id="runState">No images tested yet</span>
+          </div>
+          <div class="results-grid" id="resultsGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <template id="resultTemplate">
+      <article class="result-card">
+        <img class="preview" alt="">
+        <div class="result-body">
+          <div class="prediction-line">
+            <strong class="top-label"></strong>
+            <span class="confidence"></span>
+          </div>
+          <div class="meta"></div>
+          <div class="bars"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
