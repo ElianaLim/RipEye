@@ -1,9 +1,11 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import path from "path";
 
 export default defineConfig(({ mode }) => {
+
   const workspaceRoot = path.resolve(import.meta.dirname, "../..");
   const env = loadEnv(mode, workspaceRoot, "");
   const rawPort = env.PORT ?? process.env.PORT ?? "3001";
@@ -18,7 +20,12 @@ export default defineConfig(({ mode }) => {
   return {
     envDir: workspaceRoot,
     base: basePath,
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      basicSsl(),
+    ],
+
     resolve: {
       alias: {
         "@": path.resolve(import.meta.dirname, "src"),
@@ -26,28 +33,37 @@ export default defineConfig(({ mode }) => {
       },
       dedupe: ["react", "react-dom"],
     },
+
     root: path.resolve(import.meta.dirname),
+
     build: {
       outDir: path.resolve(import.meta.dirname, "dist/public"),
       emptyOutDir: true,
     },
+
     server: {
       port,
       strictPort: true,
-      host: "localhost",
+      host: true,
+      https: {},
+
       proxy: {
         "/api": {
           target: apiTarget,
           changeOrigin: true,
         },
       },
+
       fs: {
         strict: true,
       },
     },
+
     preview: {
       port,
-      host: "localhost",
+      host: true,
+      https: {},
     },
   };
+
 });
