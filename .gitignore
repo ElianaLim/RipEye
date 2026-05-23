@@ -86,6 +86,24 @@ ipython_config.py
 .venv/
 __pycache__/
 .DS_Store
+
+# Node / pnpm workspaces
+node_modules/
+**/node_modules/
+.pnpm-store/
+**/.pnpm-store/
+.pnpm-debug.log*
+pnpm-debug.log*
+
+# Frontend build/cache output
+**/dist/
+**/tmp/
+**/out-tsc/
+**/*.tsbuildinfo
+**/.vite/
+**/.turbo/
+**/coverage/
+
 data/*/
 !data/README.md
 !data/data.yaml
