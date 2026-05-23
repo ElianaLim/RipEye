@@ -113,6 +113,7 @@ data/import/*
 data/severity_labels.csv
 runs/
 *.pt
+!models/**/*.pt
 *.ipynb_checkpoints/
 
 # pyenv

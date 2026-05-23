@@ -26,7 +26,7 @@ Tune `severe_ratio` in `SeverityConfig`. Regenerate labels with `scripts/compute
 
 - Notebook: `notebooks/train_damage_detection.ipynb`
 - CLI: `scripts/train_detector.py data/data.yaml`
-- Outputs: `runs/detect/ripeye/weights/best.pt`
+- Training writes to `runs/detect/ripeye/weights/`; the checked-in weights used at runtime are `models/ripeye/best.pt`
 
 Evaluate detection (mAP) and severity (holdout confusion matrix) in the notebook before wiring the driver app.
 

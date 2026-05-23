@@ -9,12 +9,13 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Put the Roboflow YOLO export in `data/` (see [data/README.md](data/README.md)), then open `notebooks/train_damage_detection.ipynb`.
+Pretrained weights ship in `models/ripeye/best.pt` — clone and run inference without training. To retrain, put the Roboflow YOLO export in `data/` (see [data/README.md](data/README.md)) and open `notebooks/train_damage_detection.ipynb`.
 
 ## Layout
 
 | Path | What |
 |------|------|
+| `models/ripeye/best.pt` | pretrained detector weights |
 | `data/` | YOLO dataset + `severity_labels.csv` |
 | `ripeye/severity.py` | area % → severity |
 | `scripts/` | fetch data, labels, training |

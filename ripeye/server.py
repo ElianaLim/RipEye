@@ -42,7 +42,7 @@ async def lifespan(app: FastAPI):
 
     from ripeye.severity import SeverityConfig, load_id_to_name
 
-    weights = Path(os.environ.get("RIPEYE_WEIGHTS", ROOT / "runs/detect/ripeye/weights/best.pt"))
+    weights = Path(os.environ.get("RIPEYE_WEIGHTS", ROOT / "models/ripeye/best.pt"))
     data_yaml = Path(os.environ.get("RIPEYE_DATA_YAML", ROOT / "data/data.yaml"))
     if not weights.exists():
         raise FileNotFoundError(f"Missing weights: {weights}")
