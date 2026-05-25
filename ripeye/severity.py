@@ -33,7 +33,7 @@ class SeverityConfig:
     # damage_area / package_area → severity (tune thresholds on validation set)
     # < minor_ratio = none, [minor_ratio, severe_ratio] = minor, > severe_ratio = severe
     minor_ratio: float = 0.05
-    severe_ratio: float = 0.30
+    severe_ratio: float = 0.20
 
 
 def _wh_from_label_parts(parts: list[str]) -> tuple[float, float] | None:

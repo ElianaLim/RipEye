@@ -14,7 +14,7 @@ Not using whole-image classification. Severity is area-based on boxes.
 | ------------- | -------- |
 | <5            | `none`   |
 | ≥5 and ≤30    | `minor`  |
-| >30           | `severe` |
+| >20           | `severe` |
 
 Tune `minor_ratio` and `severe_ratio` in `SeverityConfig`. Regenerate labels with `scripts/compute_severity_labels.py`.
 
