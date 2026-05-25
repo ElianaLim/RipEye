@@ -10,13 +10,13 @@ Not using whole-image classification. Severity is area-based on boxes.
 
 ## Severity rules (current)
 
-| Damage area % | Label |
-|---------------|-------|
-| 0 | `none` |
-| >0 and ≤30 | `minor` |
-| >30 | `severe` |
+| Damage area % | Label    |
+| ------------- | -------- |
+| <5            | `none`   |
+| ≥5 and ≤30    | `minor`  |
+| >20           | `severe` |
 
-Tune `severe_ratio` in `SeverityConfig`. Regenerate labels with `scripts/compute_severity_labels.py`.
+Tune `minor_ratio` and `severe_ratio` in `SeverityConfig`. Regenerate labels with `scripts/compute_severity_labels.py`.
 
 ## Dataset
 

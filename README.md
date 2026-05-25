@@ -13,14 +13,14 @@ Pretrained weights ship in `models/ripeye/best.pt` — clone and run inference w
 
 ## Layout
 
-| Path | What |
-|------|------|
-| `models/ripeye/best.pt` | pretrained detector weights |
-| `data/` | YOLO dataset + `severity_labels.csv` |
-| `ripeye/severity.py` | area % → severity |
-| `scripts/` | fetch data, labels, training |
-| `notebooks/` | main workflow |
-| `shopee delivery clone/` | driver app (separate) |
+| Path                     | What                                 |
+| ------------------------ | ------------------------------------ |
+| `models/ripeye/best.pt`  | pretrained detector weights          |
+| `data/`                  | YOLO dataset + `severity_labels.csv` |
+| `ripeye/severity.py`     | area % → severity                    |
+| `scripts/`               | fetch data, labels, training         |
+| `notebooks/`             | main workflow                        |
+| `shopee delivery clone/` | driver app (separate)                |
 
 Model hooks in the driver app: `artifacts/api-server/src/lib/damage-model.ts`.
 
@@ -35,6 +35,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn ripeye.server:app --host 0.0.0.0 --port 8000
 ```
+
+If you still see tiny false positives, raise `RIPEYE_MINOR_RATIO` before starting the API.
 
 **Terminal 2 — API + app (from `shopee delivery clone/`):**
 
