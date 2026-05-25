@@ -30,8 +30,9 @@ class SeverityConfig:
     severe_damage_names: frozenset[str] = frozenset(
         {"severe damage (destroyed)", "destroyed", "severe", "severe damage"}
     )
-    # damage_area / package_area → severity (tune severe_ratio on validation set)
-    # 0% = none, (0, severe_ratio] = minor, > severe_ratio = severe
+    # damage_area / package_area → severity (tune thresholds on validation set)
+    # < minor_ratio = none, [minor_ratio, severe_ratio] = minor, > severe_ratio = severe
+    minor_ratio: float = 0.05
     severe_ratio: float = 0.30
 
 
@@ -93,7 +94,7 @@ def ratio_to_severity(ratio: float, has_severe: bool, cfg: SeverityConfig) -> st
     """Image-level label: none | minor | severe (same in training and driver app)."""
     if has_severe or ratio > cfg.severe_ratio:
         return "severe"
-    if ratio > 0:
+    if ratio >= cfg.minor_ratio:
         return "minor"
     return "none"
 

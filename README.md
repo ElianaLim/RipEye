@@ -36,6 +36,8 @@ pip install -r requirements.txt
 uvicorn ripeye.server:app --host 0.0.0.0 --port 8000
 ```
 
+If you still see tiny false positives, raise `RIPEYE_MINOR_RATIO` before starting the API.
+
 **Terminal 2 — API + app (from `shopee delivery clone/`):**
 
 ```bash

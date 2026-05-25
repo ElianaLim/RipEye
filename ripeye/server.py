@@ -51,7 +51,10 @@ async def lifespan(app: FastAPI):
 
     _state["model"] = YOLO(str(weights))
     _state["id_to_name"] = load_id_to_name(data_yaml)
-    _state["cfg"] = SeverityConfig(severe_ratio=float(os.environ.get("RIPEYE_SEVERE_RATIO", "0.30")))
+    _state["cfg"] = SeverityConfig(
+        minor_ratio=float(os.environ.get("RIPEYE_MINOR_RATIO", "0.05")),
+        severe_ratio=float(os.environ.get("RIPEYE_SEVERE_RATIO", "0.30")),
+    )
     _state["conf"] = float(os.environ.get("RIPEYE_CONF", "0.15"))
     _state["imgsz"] = int(os.environ.get("RIPEYE_IMGSZ", "640"))
     _state["api_key"] = os.environ.get("DAMAGE_MODEL_API_KEY", "").strip()
