@@ -13,14 +13,14 @@ Pretrained weights ship in `models/ripeye/best.pt` — clone and run inference w
 
 ## Layout
 
-| Path | What |
-|------|------|
-| `models/ripeye/best.pt` | pretrained detector weights |
-| `data/` | YOLO dataset + `severity_labels.csv` |
-| `ripeye/severity.py` | area % → severity |
-| `scripts/` | fetch data, labels, training |
-| `notebooks/` | main workflow |
-| `shopee delivery clone/` | driver app (separate) |
+| Path                     | What                                 |
+| ------------------------ | ------------------------------------ |
+| `models/ripeye/best.pt`  | pretrained detector weights          |
+| `data/`                  | YOLO dataset + `severity_labels.csv` |
+| `ripeye/severity.py`     | area % → severity                    |
+| `scripts/`               | fetch data, labels, training         |
+| `notebooks/`             | main workflow                        |
+| `shopee delivery clone/` | driver app (separate)                |
 
 Model hooks in the driver app: `artifacts/api-server/src/lib/damage-model.ts`.
 
